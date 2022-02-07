@@ -7,6 +7,7 @@ import 'package:todo/modules/archive_tasks/archive_tasks_screen.dart';
 import 'package:todo/modules/done_tasks/done_tasks_screen.dart';
 import 'package:todo/modules/new_tasks/new_tasks_screen.dart';
 import 'package:todo/shared/component/cubit/states.dart';
+import 'package:todo/shared/network/local/cache_helper.dart';
 
 class AppCubit extends Cubit<AppStates>
 {
@@ -163,9 +164,23 @@ class AppCubit extends Cubit<AppStates>
     emit(AppChangeBottomSheetState());
   }
   bool isDark=false;
-  void changeAppMode(){
-    isDark=!isDark;
-    emit(AppChangeModeState());
+  void changeAppMode({bool? fromShared}){
+    if(fromShared !=null)
+      {
+        emit(AppChangeModeState());
+        isDark=fromShared;
+
+      }
+    else
+      {
+        isDark=!isDark;
+        CacheHelper.putBool(key: 'isDark', value: isDark).then((value)
+        {
+          emit(AppChangeModeState());
+        });
+      }
+
+
   }
 
 }
