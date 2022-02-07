@@ -30,10 +30,14 @@ class MyApp extends StatelessWidget
   @override
   Widget build(BuildContext context)
   {
-    return BlocProvider(
-      create: (BuildContext context)=>AppCubit()..changeAppMode(
-        fromShared: isDark,
-      ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context)=>NewsCubit()..getBusiness()),
+        BlocProvider(
+          create: (BuildContext context)=>AppCubit()..changeAppMode(
+            fromShared: isDark,
+          ),),
+      ],
       child: BlocConsumer<AppCubit,AppStates>(
         listener: (context,states){},
         builder: (context,states){
@@ -75,6 +79,7 @@ class MyApp extends StatelessWidget
               ),
               themeMode: AppCubit.get(context).isDark?ThemeMode.dark : ThemeMode.light,
               darkTheme: ThemeData(
+
                 primarySwatch: Colors.deepOrange,
                 scaffoldBackgroundColor: Colors.black12,
                 floatingActionButtonTheme: FloatingActionButtonThemeData(

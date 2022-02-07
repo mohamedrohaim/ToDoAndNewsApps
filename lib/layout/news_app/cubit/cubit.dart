@@ -131,5 +131,30 @@ List<dynamic> business=[];
 
   }
 
+  List<dynamic> search=[];
 
-}
+  void getSearch(String  value)
+  {
+    emit(NewsSearchLoadingState());
+    search=[];
+
+
+      DioHelper.getData(
+        url: '/v2/everything',
+        query: {
+          'q':'$value',
+          'apiKey':'bc574e56ea174adca390ea5c88b6b654',
+        },
+      ).then((value){
+        //print(value.data['articles'][0]['title']);
+        search=value.data['articles'];
+        print(search[0]['title']);
+        emit(NewsgetSearchSuccesState());
+      }).catchError((error){
+        print(error.toString());
+        emit(NewsgetSearchErorState());
+      });
+    }
+
+
+  }

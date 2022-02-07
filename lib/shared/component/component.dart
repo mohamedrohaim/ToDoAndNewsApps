@@ -230,3 +230,7 @@ Widget articleBuilder(list, [BuildContext? context])=>ConditionalBuilder(
       itemCount: list.length),
   fallback: (context)=>Center(child: CircularProgressIndicator()),
 );
+
+void navigateTo(context,widget)=>Navigator.push(context,
+MaterialPageRoute(builder: (context)=>widget),
+);
