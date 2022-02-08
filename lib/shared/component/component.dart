@@ -174,7 +174,7 @@ Widget buildArticleItems(article,context)
   return InkWell(
     onTap: ()
     {
-      //navigateTo(context, webViewScreen(article['url']),);
+      navigateTo(context, webViewScreen(article['url']),);
     },
     child: Padding(
       padding: const EdgeInsets.all(18.0),
